@@ -1,2 +1,2 @@
 def refund(amount):
-    return round(amount, 1)
+    return round(amount, 2)
