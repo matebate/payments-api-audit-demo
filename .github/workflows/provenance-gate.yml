@@ -6,9 +6,15 @@ jobs:
   gate:
     runs-on: ubuntu-latest
     steps:
+      # Check out the PR head itself, not GitHub's merge commit (that one has no trailers).
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Fetch git-ai notes if the repo uses them
         run: git fetch origin 'refs/notes/ai:refs/notes/ai' || true
+      # Run the gate as it exists on the BASE branch, so a PR cannot weaken its own check.
+      - name: Load the gate from the base branch
+        run: git show ${{ github.event.pull_request.base.sha }}:tools/provenance_gate.sh > "$RUNNER_TEMP/gate.sh"
       - name: Every commit has a ticket; every agent commit links to its session
-        run: bash tools/provenance_gate.sh "origin/${{ github.base_ref }}" HEAD
+        run: bash "$RUNNER_TEMP/gate.sh" ${{ github.event.pull_request.base.sha }} HEAD
