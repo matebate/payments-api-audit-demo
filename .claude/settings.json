@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "deny": ["Read(~/.aws/**)", "Read(~/.ssh/**)", "Bash(curl:*)", "Bash(wget:*)"]
+  },
+  "hooks": {
+    "SessionStart": [{ "hooks": [{ "type": "command", "command": "python3 /Users/martin/Developer/agent-audit-trail/audit/hook.py" }] }],
+    "PreToolUse":   [{ "matcher": "*", "hooks": [{ "type": "command", "command": "python3 /Users/martin/Developer/agent-audit-trail/audit/hook.py" }] }],
+    "PostToolUse":  [{ "matcher": "*", "hooks": [{ "type": "command", "command": "python3 /Users/martin/Developer/agent-audit-trail/audit/hook.py" }] }]
+  }
+}
