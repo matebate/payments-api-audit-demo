@@ -16,6 +16,3 @@ is visible on its own:
 
 The provenance gate (`.github/workflows/provenance-gate.yml`) checks the PR head commit, not
 GitHub's merge commit, and loads its script from the base branch so a PR cannot weaken its own check.
-
-The full reference implementation (agent hooks, hash-chained audit log, OpenTelemetry stack,
-signed evidence packs) lives in the companion repository that accompanies the article.
